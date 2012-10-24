@@ -1,10 +1,8 @@
 (ns looping-is-recursion)
 
 (defn power [base exp]
-  (let [helper (fn [acc b e]
-                 (if (zero? e)
-                   acc
-                   (recur (* acc b) b (dec e))))]
+  (let [helper (fn [acc base1 exp1]
+                 (if (zero? exp1) acc (recur (* acc base1) base1 (dec exp1))))]
     (helper 1 base exp)))
 
 (defn last-element [a-seq]
@@ -31,9 +29,9 @@
          length 0
          a-seq a-seq]
     (cond 
-     (and (empty? a-seq) (zero? length)) 0
-     (empty? a-seq) (/ acc length)
-     :else (recur (+ acc (first a-seq)) (inc length) (rest a-seq)))))
+      (and (empty? a-seq) (zero? length)) 0
+      (empty? a-seq) (/ acc length)
+      :else (recur (+ acc (first a-seq)) (inc length) (rest a-seq)))))
 
 (defn parity [a-seq]
   (let [toggle (fn [a-set elem] (if (contains? a-set elem) (disj a-set elem) (conj a-set elem)))]
@@ -48,8 +46,8 @@
          curr 1
          n n]
     (cond
-     (zero? n) prev
-     :else (recur curr (+ prev curr) (dec n)))))
+      (zero? n) prev
+      :else (recur curr (+ prev curr) (dec n)))))
 
 (defn cut-at-repetition [a-seq]
   (loop [acc []
